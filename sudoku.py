@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-import matrix as mtrx
+import matrix as sudoku_matrix
 
 def check(matrix, x, y, n):
     if matrix[x][y] != 0:
@@ -69,12 +69,14 @@ def replaced(arr, original, changed):
     return arr2
 
 def print_matrix(matrix):
-    line = "\n|" + "-"*35 + "|\n"
-    print(line + line.join(["| " + " | ".join(map(str, replaced(x, 0, " "))) + " |" for x in matrix]) + line)
+    n=35
+    line_end = "\n " + "-"*n + " \n"
+    line_middle = "\n|" + "-"*n + "|\n"
+    print(line_end + line_middle.join(["| " + " | ".join(map(str, replaced(x, 0, " "))) + " |" for x in matrix]) + line_end)
 
 
 def main():
-    mt = mtrx.matrix1
+    mt = sudoku_matrix.matrix1
     print("original:\n\n")
     print_matrix(mt)
     print("\n\nsolved:\n\n")
