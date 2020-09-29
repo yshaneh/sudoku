@@ -1,10 +1,19 @@
 #!/usr/bin/python3
 
 import matrix as sudoku_matrix
+from os import system, name
+from time import sleep
 
 
 def clone(matrix):
     return [x.copy() for x in matrix]
+
+def clear():
+    if name == 'nt': 
+        system('cls') 
+    else: 
+        system('clear') 
+
 
 def check(matrix, x, y, n):
     if matrix[x][y] != 0:
@@ -35,7 +44,14 @@ def check_done(matrix):
             return False
     return True
 
-def solve_one(matrix):
+
+def show(matrix, time=0):
+    clear()
+    print_matrix(matrix)
+    if time > 0:
+        sleep(time)
+
+def solve_one(matrix, display=False):
     matrix = clone(matrix)
     flag = True
     while flag:
@@ -46,16 +62,19 @@ def solve_one(matrix):
                 if len(opts) == 1:
                     flag = True
                     matrix[x][y] = opts[0]
+                    show(matrix, 0.2)
+                    
     return matrix
 
 
-def solve_brute(matrix):
+def solve_brute(matrix, display=False):
     matrix = clone(matrix)
     for x in range(9):
         for y in range(9):
             if matrix[x][y] == 0:
                 for n in get_all_options(matrix, x ,y):
                     matrix[x][y] = n
+                    show(matrix)
                     # print(x, y)
                     result = solve(matrix)
                     if check_done(result):
@@ -64,9 +83,9 @@ def solve_brute(matrix):
     return matrix
 
 
-def solve(matrix):
+def solve(matrix, display=False):
     matrix = clone(matrix)
-    return solve_brute(solve_one(matrix))
+    return solve_brute(solve_one(matrix, display), display)
 
 def replaced(arr, original, changed):
     arr = arr.copy()
@@ -84,10 +103,14 @@ def print_matrix(matrix):
 
 def main():
     mt = sudoku_matrix.matrix3
+    show(mt, 2)
+    solved = solve(mt)
+    sleep(0.3)
+    clear()
     print("original:\n\n")
     print_matrix(mt)
     print("\n\nsolved:\n\n")
-    print_matrix(solve(mt))
+    print_matrix(solved)
     # print("variable:\n\n")
     # print_matrix(mt)
 
