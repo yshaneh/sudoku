@@ -45,19 +45,6 @@ class Sudoku:
     def get_all_options(self, matrix, x, y):
         return [n for n in range(1,10) if self.check(matrix, x, y, n)]
 
-    def check_done(self, matrix):
-        for arr in matrix:
-            if 0 in arr:
-                return False
-        return True
-
-
-    def show(self, matrix, time=0):
-        self.clear()
-        self.print_matrix(matrix)
-        if time > 0:
-            sleep(time)
-
     def solve_one(self, matrix, display=False):
         cloned_matrix = self.clone(matrix)
         flag = True
@@ -74,6 +61,12 @@ class Sudoku:
                         if display:
                             self.show(self.str_matrix, 0.2)
         return cloned_matrix
+
+    def show(self, matrix, time=0):
+        self.clear()
+        self.print_matrix(matrix)
+        if time > 0:
+            sleep(time)
 
 
     def solve_brute(self, matrix, display=False):
@@ -120,7 +113,7 @@ def main():
     sudoku = Sudoku(sudoku_matrix.matrix3)
     sudoku.show(sudoku.matrix, 2)
     solved = sudoku.solve(True)
-    sleep(0.3)
+    sleep(2)
     sudoku.clear()
     print("original:\n\n")
     sudoku.print_matrix(sudoku.matrix)
