@@ -62,6 +62,12 @@ class Sudoku:
                             self.show(self.str_matrix, 0.2)
         return cloned_matrix
 
+    def check_done(self, matrix):
+        for arr in matrix:
+            if 0 in arr:
+                return False
+        return True
+
     def show(self, matrix, time=0):
         self.clear()
         self.print_matrix(matrix)
