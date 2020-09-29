@@ -2,6 +2,10 @@
 
 import matrix as sudoku_matrix
 
+
+def clone(matrix):
+    return [x.copy() for x in matrix]
+
 def check(matrix, x, y, n):
     if matrix[x][y] != 0:
         return False
@@ -32,6 +36,7 @@ def check_done(matrix):
     return True
 
 def solve_one(matrix):
+    matrix = clone(matrix)
     flag = True
     while flag:
         flag = False
@@ -45,12 +50,13 @@ def solve_one(matrix):
 
 
 def solve_brute(matrix):
+    matrix = clone(matrix)
     for x in range(9):
         for y in range(9):
             if matrix[x][y] == 0:
                 for n in get_all_options(matrix, x ,y):
                     matrix[x][y] = n
-                    print(x, y)
+                    # print(x, y)
                     result = solve(matrix)
                     if check_done(result):
                         return result
@@ -59,14 +65,15 @@ def solve_brute(matrix):
 
 
 def solve(matrix):
+    matrix = clone(matrix)
     return solve_brute(solve_one(matrix))
 
 def replaced(arr, original, changed):
-    arr2 = list(arr)
+    arr = arr.copy()
     for i, n in enumerate(arr):
         if n == original:
-            arr2[i] = changed
-    return arr2
+            arr[i] = changed
+    return arr
 
 def print_matrix(matrix):
     n=35
@@ -76,11 +83,13 @@ def print_matrix(matrix):
 
 
 def main():
-    mt = sudoku_matrix.matrix1
+    mt = sudoku_matrix.matrix3
     print("original:\n\n")
     print_matrix(mt)
     print("\n\nsolved:\n\n")
     print_matrix(solve(mt))
+    # print("variable:\n\n")
+    # print_matrix(mt)
 
 if __name__ == "__main__":
     main()
